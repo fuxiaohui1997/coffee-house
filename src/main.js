@@ -1,9 +1,23 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
-Vue.config.productionTip = false
+// vant组件
+import 'vant/lib/index.css';
+
+//基础样式和字体文件
+import './assets/css/base.css';
+import './assets/font/iconfont.css';
+
+import axios from "axios";
+axios.defaults.baseURL = "http://127.0.0.1:3000"
+Vue.prototype.$axios = axios;
+
+import Vant from 'vant';
+Vue.use(Vant);
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,
