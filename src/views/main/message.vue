@@ -9,7 +9,9 @@
           <van-icon name="arrow-left"></van-icon>
         </van-button>
       </van-col>
-      消息中心
+      <van-col span="18">
+        消息中心
+      </van-col>
     </van-row>
     <div class="content">
       <div>

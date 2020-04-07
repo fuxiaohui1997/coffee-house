@@ -1,7 +1,7 @@
 <template>
   <div id="app"
        v-cloak>
-
+    <van-toast id="van-toast" />
     <!-- 弹出框组件 -->
     <myAlert :msg="msg"
              :visible="visible"></myAlert>

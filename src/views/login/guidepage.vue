@@ -32,7 +32,7 @@
         <div class="swiper-slide">
           <van-row class="page-three guidepage">
             <img class="img"
-                 src="../../assets/guide3.png"
+                 src="../../assets/guide3.webp"
                  alt="">
             <span class="text">Coffee House</span>
             <van-button class="btn"
