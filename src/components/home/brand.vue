@@ -181,7 +181,7 @@
 									<van-button
 										color="linear-gradient(to right, #F08B3B, #F0643B)"
 										size="mini"
-										@click="goOrder"
+										@click="goOrder(item)"
 										>买买买</van-button
 									>
 								</div>
@@ -253,12 +253,13 @@
 				this.$store.commit('goodsDetails/SET_DETAILS', goods)
 				this.$router.push('/details')
 			},
-			goOrder() {
-				this.$store.commit('cart/SET_GOODS', this.goods)
+			goOrder(goods) {
+				if (!this.$store.state.user.token) {
+					this.$router.push('/login')
+					return
+				}
+				this.$store.commit('cart/SET_GOODS', goods)
 				this.$router.push('/order')
-			},
-			goDetail() {
-				this.$router.push('/details')
 			}
 		},
 		components: {

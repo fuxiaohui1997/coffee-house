@@ -14,30 +14,33 @@
 						border-radius: 10px;
 						overflow: hidden;
 					"
-					v-for="count in 10"
-					:key="count"
+					v-for="item in goodsList"
+					:key="item._id"
 				>
 					<van-card
-						price="20.00"
-						desc="蓝山咖啡的描述信息"
-						:title="'悠诗诗' + count + '号'"
-						thumb="http://img3.imgtn.bdimg.com/it/u=600800616,1531945281&fm=26&gp=0.jpg"
+						:price="item.price | dealPrice"
+						:desc="item.description"
+						:title="item.name"
+						:thumb="item.imgList[0].src"
 					>
 						<div slot="tags">
 							<van-tag plain type="danger">好喝</van-tag>
 							<van-tag plain type="danger">折扣</van-tag>
 						</div>
-						<div slot="footer">
+						<div
+							slot="footer"
+							style="position: absolute; right: 5px; bottom: 10px;"
+						>
 							<van-button
 								color="linear-gradient(to right, #4bb0ff, #6149f6)"
 								size="mini"
-								to="/details"
+								@click="toDetails(item)"
 								>去看看</van-button
 							>
 							<van-button
 								color="linear-gradient(to right, #F08B3B, #F0643B)"
 								size="mini"
-								@click="goOrder"
+								@click="goOrder(item)"
 								>买买买</van-button
 							>
 						</div>
@@ -48,6 +51,7 @@
 	</div>
 </template>
 <script>
+	import { fetchList } from '@/api/goods'
 	import mySwiper from '../myPublic/swiper'
 	export default {
 		data() {
@@ -71,21 +75,29 @@
 							'http://193.112.249.63:4001/public/images/2020040420580989337.png'
 					}
 				],
-				goods: {
-					id: 5,
-					name: '蓝山咖啡',
-					price: '20',
-					num: 1
-				}
+				goodsList: []
 			}
 		},
+		created() {
+			this.getList()
+		},
 		methods: {
-			goOrder() {
-				this.$store.commit('cart/SET_GOODS', this.goods)
+			goOrder(goods) {
+				if (!this.$store.state.user.token) {
+					this.$router.push('/login')
+					return
+				}
+				this.$store.commit('cart/SET_GOODS', goods)
 				this.$router.push('/order')
 			},
-			goDetail() {
+			toDetails(goods) {
+				this.$store.commit('goodsDetails/SET_DETAILS', goods)
 				this.$router.push('/details')
+			},
+			getList() {
+				fetchList({ category: '销量' }).then(res => {
+					this.goodsList = res.data
+				})
 			}
 		},
 		components: {
@@ -95,7 +107,7 @@
 </script>
 <style lang="scss" scoped>
 	.brand-container {
-    background: url('http://193.112.249.63:4001/public/images/2020040420344187986.png')
+		background: url('http://193.112.249.63:4001/public/images/2020040420344187986.png')
 			no-repeat center 0px;
 		background-size: 100% auto;
 		position: absolute;
